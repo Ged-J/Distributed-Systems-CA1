@@ -1,0 +1,36 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "definitions": {
+        "Review": {
+            "additionalProperties": false,
+            "properties": {
+                "movieId": {
+                    "items": {
+                        "type": "number"
+                    }
+                },
+                "reviewerName": {
+                    "type": "string"
+                },
+                "rating": {
+                    "type": "number"
+                },
+                "content": {
+                    "type": "string"
+                },
+                "reviewDate": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "movieId",
+                "reviewerName",
+                "rating",
+                "content",
+                "reviewDate"
+            ],
+            "type": "object"
+        }
+        
+    }
+}
