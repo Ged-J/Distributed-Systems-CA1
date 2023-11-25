@@ -32,6 +32,19 @@ export class DistributedSystemsCA1Stack extends cdk.Stack {
               REGION: 'eu-west-1'
           }
         });
+
+        // Add new review lambda
+        const newReviewFn = new lambdanode.NodejsFunction(this, "AddMovieFn", {
+          architecture: lambda.Architecture.ARM_64,
+          runtime: lambda.Runtime.NODEJS_16_X,
+          entry: `${__dirname}/../lambdas/addReview.ts`,
+          timeout: cdk.Duration.seconds(10),
+          memorySize: 128,
+          environment: {
+            TABLE_NAME: reviewsTable.tableName,
+            REGION: "eu-west-1",
+          }
+        });
     
     
         new custom.AwsCustomResource(this, "initReviewsDDBData", {
@@ -52,6 +65,8 @@ export class DistributedSystemsCA1Stack extends cdk.Stack {
     
       // Permissions
       reviewsTable.grantReadData(getAllReviewsFn);
+
+      reviewsTable.grantReadWriteData(newReviewFn);
     
       const api = new apig.RestApi(this, 'ReviewsApi', {
         description: "Reviews API",
@@ -71,5 +86,9 @@ export class DistributedSystemsCA1Stack extends cdk.Stack {
     
       // GET /reviews
       reviewsEndpoint.addMethod('GET', new apig.LambdaIntegration(getAllReviewsFn, { proxy: true }));
+
+      // POST /reviews
+      reviewsEndpoint.addMethod("POST",new apig.LambdaIntegration(newReviewFn, { proxy: true }));
+
     }
     }

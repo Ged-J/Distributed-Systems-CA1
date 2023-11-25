@@ -111,7 +111,7 @@
      "S3Bucket": {
       "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
      },
-     "S3Key": "538eeda781d25a7cb3096076c82e8cad04edd69a2c2cee96979fb1256b485d06.zip"
+     "S3Key": "969034b8015d9219651417e2a75a9a17594f3d5d7111e8a186103da488c1868f.zip"
     },
     "Environment": {
      "Variables": {
@@ -139,7 +139,131 @@
    ],
    "Metadata": {
     "aws:cdk:path": "DistributedSystemsCA1Stack/GetAllReviewsFn/Resource",
-    "aws:asset:path": "C:\\Users\\Ged\\OneDrive - Waterford Institute of Technology\\Documents\\GitHub\\Distributed-Systems-CA1",
+    "aws:asset:path": "asset.969034b8015d9219651417e2a75a9a17594f3d5d7111e8a186103da488c1868f",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "AddMovieFnServiceRoleB1F9B436": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "DistributedSystemsCA1Stack/AddMovieFn/ServiceRole/Resource"
+   }
+  },
+  "AddMovieFnServiceRoleDefaultPolicy28168983": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "dynamodb:BatchGetItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:ConditionCheckItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:DescribeTable",
+        "dynamodb:GetItem",
+        "dynamodb:GetRecords",
+        "dynamodb:GetShardIterator",
+        "dynamodb:PutItem",
+        "dynamodb:Query",
+        "dynamodb:Scan",
+        "dynamodb:UpdateItem"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "ReviewsTable1E51AE49",
+          "Arn"
+         ]
+        },
+        {
+         "Ref": "AWS::NoValue"
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "AddMovieFnServiceRoleDefaultPolicy28168983",
+    "Roles": [
+     {
+      "Ref": "AddMovieFnServiceRoleB1F9B436"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "DistributedSystemsCA1Stack/AddMovieFn/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "AddMovieFnA0261A58": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Architectures": [
+     "arm64"
+    ],
+    "Code": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+     },
+     "S3Key": "e4524046fa9414ca4c9063ee2773b3bd0ebc3f2d9e8a4ff634951313c6963edf.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "TABLE_NAME": {
+       "Ref": "ReviewsTable1E51AE49"
+      },
+      "REGION": "eu-west-1",
+      "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1"
+     }
+    },
+    "Handler": "index.handler",
+    "MemorySize": 128,
+    "Role": {
+     "Fn::GetAtt": [
+      "AddMovieFnServiceRoleB1F9B436",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs16.x",
+    "Timeout": 10
+   },
+   "DependsOn": [
+    "AddMovieFnServiceRoleDefaultPolicy28168983",
+    "AddMovieFnServiceRoleB1F9B436"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "DistributedSystemsCA1Stack/AddMovieFn/Resource",
+    "aws:asset:path": "asset.e4524046fa9414ca4c9063ee2773b3bd0ebc3f2d9e8a4ff634951313c6963edf",
     "aws:asset:is-bundled": true,
     "aws:asset:property": "Code"
    }
@@ -278,7 +402,7 @@
     "aws:cdk:path": "DistributedSystemsCA1Stack/ReviewsApi/Resource"
    }
   },
-  "ReviewsApiDeployment4C440010813deeebc5babf2e0a83ca8388b062a3": {
+  "ReviewsApiDeployment4C44001057f4e9a34e9e2b37882f1edfe76336cf": {
    "Type": "AWS::ApiGateway::Deployment",
    "Properties": {
     "Description": "Reviews API",
@@ -290,6 +414,7 @@
     "ReviewsApiOPTIONS22F4A573",
     "ReviewsApireviewsGET12337435",
     "ReviewsApireviewsOPTIONSE2250C74",
+    "ReviewsApireviewsPOSTC3206C5C",
     "ReviewsApireviewsA4FC1247"
    ],
    "Metadata": {
@@ -300,7 +425,7 @@
    "Type": "AWS::ApiGateway::Stage",
    "Properties": {
     "DeploymentId": {
-     "Ref": "ReviewsApiDeployment4C440010813deeebc5babf2e0a83ca8388b062a3"
+     "Ref": "ReviewsApiDeployment4C44001057f4e9a34e9e2b37882f1edfe76336cf"
     },
     "RestApiId": {
      "Ref": "ReviewsApiACD7B840"
@@ -547,6 +672,133 @@
    },
    "Metadata": {
     "aws:cdk:path": "DistributedSystemsCA1Stack/ReviewsApi/Default/reviews/GET/Resource"
+   }
+  },
+  "ReviewsApireviewsPOSTApiPermissionDistributedSystemsCA1StackReviewsApiD1B62E68POSTreviews000823BA": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "AddMovieFnA0261A58",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:",
+       {
+        "Ref": "AWS::Region"
+       },
+       ":",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "ReviewsApiACD7B840"
+       },
+       "/",
+       {
+        "Ref": "ReviewsApiDeploymentStagedev1C7AA00F"
+       },
+       "/POST/reviews"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "DistributedSystemsCA1Stack/ReviewsApi/Default/reviews/POST/ApiPermission.DistributedSystemsCA1StackReviewsApiD1B62E68.POST..reviews"
+   }
+  },
+  "ReviewsApireviewsPOSTApiPermissionTestDistributedSystemsCA1StackReviewsApiD1B62E68POSTreviews493C0356": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "AddMovieFnA0261A58",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:",
+       {
+        "Ref": "AWS::Region"
+       },
+       ":",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "ReviewsApiACD7B840"
+       },
+       "/test-invoke-stage/POST/reviews"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "DistributedSystemsCA1Stack/ReviewsApi/Default/reviews/POST/ApiPermission.Test.DistributedSystemsCA1StackReviewsApiD1B62E68.POST..reviews"
+   }
+  },
+  "ReviewsApireviewsPOSTC3206C5C": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "AuthorizationType": "NONE",
+    "HttpMethod": "POST",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:",
+        {
+         "Ref": "AWS::Region"
+        },
+        ":lambda:path/2015-03-31/functions/",
+        {
+         "Fn::GetAtt": [
+          "AddMovieFnA0261A58",
+          "Arn"
+         ]
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    },
+    "ResourceId": {
+     "Ref": "ReviewsApireviewsA4FC1247"
+    },
+    "RestApiId": {
+     "Ref": "ReviewsApiACD7B840"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "DistributedSystemsCA1Stack/ReviewsApi/Default/reviews/POST/Resource"
    }
   },
   "CDKMetadata": {

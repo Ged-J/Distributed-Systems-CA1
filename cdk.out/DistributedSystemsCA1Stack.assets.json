@@ -1,15 +1,28 @@
 {
   "version": "32.0.0",
   "files": {
-    "538eeda781d25a7cb3096076c82e8cad04edd69a2c2cee96979fb1256b485d06": {
+    "969034b8015d9219651417e2a75a9a17594f3d5d7111e8a186103da488c1868f": {
       "source": {
-        "path": "C:\\Users\\Ged\\OneDrive - Waterford Institute of Technology\\Documents\\GitHub\\Distributed-Systems-CA1",
+        "path": "asset.969034b8015d9219651417e2a75a9a17594f3d5d7111e8a186103da488c1868f",
         "packaging": "zip"
       },
       "destinations": {
         "current_account-current_region": {
           "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
-          "objectKey": "538eeda781d25a7cb3096076c82e8cad04edd69a2c2cee96979fb1256b485d06.zip",
+          "objectKey": "969034b8015d9219651417e2a75a9a17594f3d5d7111e8a186103da488c1868f.zip",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
+        }
+      }
+    },
+    "e4524046fa9414ca4c9063ee2773b3bd0ebc3f2d9e8a4ff634951313c6963edf": {
+      "source": {
+        "path": "asset.e4524046fa9414ca4c9063ee2773b3bd0ebc3f2d9e8a4ff634951313c6963edf",
+        "packaging": "zip"
+      },
+      "destinations": {
+        "current_account-current_region": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
+          "objectKey": "e4524046fa9414ca4c9063ee2773b3bd0ebc3f2d9e8a4ff634951313c6963edf.zip",
           "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
         }
       }
@@ -27,7 +40,7 @@
         }
       }
     },
-    "e7bf8b9ad0a207ab74388c370e78202993de527eb51b5a644bfd549767dee56a": {
+    "486c2c4eb4106def3ba4169178047d663d79ccf5b6ad233ffeeb24e49f2253d1": {
       "source": {
         "path": "DistributedSystemsCA1Stack.template.json",
         "packaging": "file"
@@ -35,7 +48,7 @@
       "destinations": {
         "current_account-current_region": {
           "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
-          "objectKey": "e7bf8b9ad0a207ab74388c370e78202993de527eb51b5a644bfd549767dee56a.json",
+          "objectKey": "486c2c4eb4106def3ba4169178047d663d79ccf5b6ad233ffeeb24e49f2253d1.json",
           "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
         }
       }

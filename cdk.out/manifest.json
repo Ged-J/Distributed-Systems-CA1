@@ -17,7 +17,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/e7bf8b9ad0a207ab74388c370e78202993de527eb51b5a644bfd549767dee56a.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/486c2c4eb4106def3ba4169178047d663d79ccf5b6ad233ffeeb24e49f2253d1.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -65,6 +65,24 @@
             "data": "GetAllReviewsFnD0E79FC2"
           }
         ],
+        "/DistributedSystemsCA1Stack/AddMovieFn/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AddMovieFnServiceRoleB1F9B436"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/AddMovieFn/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AddMovieFnServiceRoleDefaultPolicy28168983"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/AddMovieFn/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AddMovieFnA0261A58"
+          }
+        ],
         "/DistributedSystemsCA1Stack/initReviewsDDBData/Resource/Default": [
           {
             "type": "aws:cdk:logicalId",
@@ -98,7 +116,7 @@
         "/DistributedSystemsCA1Stack/ReviewsApi/Deployment/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "ReviewsApiDeployment4C440010813deeebc5babf2e0a83ca8388b062a3"
+            "data": "ReviewsApiDeployment4C44001057f4e9a34e9e2b37882f1edfe76336cf"
           }
         ],
         "/DistributedSystemsCA1Stack/ReviewsApi/DeploymentStage.dev/Resource": [
@@ -147,6 +165,24 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "ReviewsApireviewsGET12337435"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/ReviewsApi/Default/reviews/POST/ApiPermission.DistributedSystemsCA1StackReviewsApiD1B62E68.POST..reviews": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReviewsApireviewsPOSTApiPermissionDistributedSystemsCA1StackReviewsApiD1B62E68POSTreviews000823BA"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/ReviewsApi/Default/reviews/POST/ApiPermission.Test.DistributedSystemsCA1StackReviewsApiD1B62E68.POST..reviews": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReviewsApireviewsPOSTApiPermissionTestDistributedSystemsCA1StackReviewsApiD1B62E68POSTreviews493C0356"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/ReviewsApi/Default/reviews/POST/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReviewsApireviewsPOSTC3206C5C"
           }
         ],
         "/DistributedSystemsCA1Stack/CDKMetadata/Default": [
