@@ -1,0 +1,819 @@
+{
+ "Resources": {
+  "ReviewsTable1E51AE49": {
+   "Type": "AWS::DynamoDB::Table",
+   "Properties": {
+    "AttributeDefinitions": [
+     {
+      "AttributeName": "movieId",
+      "AttributeType": "N"
+     }
+    ],
+    "BillingMode": "PAY_PER_REQUEST",
+    "KeySchema": [
+     {
+      "AttributeName": "movieId",
+      "KeyType": "HASH"
+     }
+    ],
+    "TableName": "ReviewsTable"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "DistributedSystemsCA1Stack/ReviewsTable/Resource"
+   }
+  },
+  "GetAllReviewsFnServiceRoleD7332F49": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "DistributedSystemsCA1Stack/GetAllReviewsFn/ServiceRole/Resource"
+   }
+  },
+  "GetAllReviewsFnServiceRoleDefaultPolicyBFA33483": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": [
+        "dynamodb:BatchGetItem",
+        "dynamodb:ConditionCheckItem",
+        "dynamodb:DescribeTable",
+        "dynamodb:GetItem",
+        "dynamodb:GetRecords",
+        "dynamodb:GetShardIterator",
+        "dynamodb:Query",
+        "dynamodb:Scan"
+       ],
+       "Effect": "Allow",
+       "Resource": [
+        {
+         "Fn::GetAtt": [
+          "ReviewsTable1E51AE49",
+          "Arn"
+         ]
+        },
+        {
+         "Ref": "AWS::NoValue"
+        }
+       ]
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "GetAllReviewsFnServiceRoleDefaultPolicyBFA33483",
+    "Roles": [
+     {
+      "Ref": "GetAllReviewsFnServiceRoleD7332F49"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "DistributedSystemsCA1Stack/GetAllReviewsFn/ServiceRole/DefaultPolicy/Resource"
+   }
+  },
+  "GetAllReviewsFnD0E79FC2": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Architectures": [
+     "arm64"
+    ],
+    "Code": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+     },
+     "S3Key": "6e8882290f9529585dba95694e9a5581f141c2cdb85873bef11d54e78390732b.zip"
+    },
+    "Environment": {
+     "Variables": {
+      "TABLE_NAME": {
+       "Ref": "ReviewsTable1E51AE49"
+      },
+      "REGION": "eu-west-1",
+      "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1"
+     }
+    },
+    "Handler": "index.handler",
+    "MemorySize": 128,
+    "Role": {
+     "Fn::GetAtt": [
+      "GetAllReviewsFnServiceRoleD7332F49",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs16.x",
+    "Timeout": 10
+   },
+   "DependsOn": [
+    "GetAllReviewsFnServiceRoleDefaultPolicyBFA33483",
+    "GetAllReviewsFnServiceRoleD7332F49"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "DistributedSystemsCA1Stack/GetAllReviewsFn/Resource",
+    "aws:asset:path": "C:\\Users\\Ged\\Desktop\\college modules year 4\\distributed systems\\Distributed-Systems-CA1",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "initReviewsDDBData370629A9": {
+   "Type": "Custom::AWS",
+   "Properties": {
+    "ServiceToken": {
+     "Fn::GetAtt": [
+      "AWS679f53fac002430cb0da5b7982bd22872D164C4C",
+      "Arn"
+     ]
+    },
+    "Create": {
+     "Fn::Join": [
+      "",
+      [
+       "{\"service\":\"DynamoDB\",\"action\":\"batchWriteItem\",\"parameters\":{\"RequestItems\":{\"",
+       {
+        "Ref": "ReviewsTable1E51AE49"
+       },
+       "\":[{\"PutRequest\":{\"Item\":{\"movieId\":{\"N\":\"299054\"},\"reviewerName\":{\"S\":\"James781\"},\"rating\":{\"N\":\"6\"},\"content\":{\"S\":\"Although the film has its share of high points, there are more misses than hits, resulting in a 2 ½ hour experience that provokes frustration at a missed opportunity.\"},\"reviewDate\":{\"S\":\"08/10/2023\"}}}},{\"PutRequest\":{\"Item\":{\"movieId\":{\"N\":\"385687\"},\"reviewerName\":{\"S\":\"Proma6\"},\"rating\":{\"N\":\"8\"},\"content\":{\"S\":\"Most importantly, Scott Pilgrim Takes Off is true to its predecessors with an inexhaustibly fun spirit... The buoyant, punk rock, experimental soul of the story is thriving.\"},\"reviewDate\":{\"S\":\"18/11/2023\"}}}},{\"PutRequest\":{\"Item\":{\"movieId\":{\"N\":\"926393\"},\"reviewerName\":{\"S\":\"Ged76\"},\"rating\":{\"N\":\"6\"},\"content\":{\"S\":\"Anyone remember the little tune that went with the Edward Woodward television series? Well you won't hear it here in this rather procedural vehicle for Denzel Washington. His usually meticulous planning is compromised by a young lad with a rifle. This leaves \\\"McCall\\\" needing the care of a doctor \\\"Enzo\\\" (Remo Girone) in a small Sicilian town that is about to become the centre of the venal ambitions of \\\"Vincent\\\" (Andrea Scarduzio) and his henchman younger brother \\\"Marco\\\" (Andrea Dodero) who uses his team of thugs to extort from the local businesses. It's only a matter of time before heads clash and, well - you can guess the rest of this actually rather brutally predictable drama. Dakota Fanning appears now and again in a rather unnecessary sub-plot involving the CIA and some Syrian narcotics smugglers that is really undercooked - but for the most part this is really just Denzel being, well, Denzel on his quest to save his new-found friends from the grip of the unscrupulous Camorra. It's overlong for what it is, and I found Washington's performance to be rather sluggish throughout before a denouement that came across as rather simplistically rushed. It's fine, but forgettable.\"},\"reviewDate\":{\"S\":\"11/08/2023\"}}}},{\"PutRequest\":{\"Item\":{\"movieId\":{\"N\":\"951491\"},\"reviewerName\":{\"S\":\"ned3\"},\"rating\":{\"N\":\"5\"},\"content\":{\"S\":\"Better than their last effort.\"},\"reviewDate\":{\"S\":\"26/03/2023\"}}}},{\"PutRequest\":{\"Item\":{\"movieId\":{\"N\":\"872585\"},\"reviewerName\":{\"S\":\"WendyIronside\"},\"rating\":{\"N\":\"7\"},\"content\":{\"S\":\"**Parents should approach with caution, or at the very least, with extremely strong coffee.\"},\"reviewDate\":{\"S\":\"01/04/2023\"}}}}]}},\"physicalResourceId\":{\"id\":\"initReviewsDDBData\"}}"
+      ]
+     ]
+    },
+    "InstallLatestAwsSdk": false
+   },
+   "DependsOn": [
+    "initReviewsDDBDataCustomResourcePolicyD4BADE7A"
+   ],
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "DistributedSystemsCA1Stack/initReviewsDDBData/Resource/Default"
+   }
+  },
+  "initReviewsDDBDataCustomResourcePolicyD4BADE7A": {
+   "Type": "AWS::IAM::Policy",
+   "Properties": {
+    "PolicyDocument": {
+     "Statement": [
+      {
+       "Action": "dynamodb:BatchWriteItem",
+       "Effect": "Allow",
+       "Resource": {
+        "Fn::GetAtt": [
+         "ReviewsTable1E51AE49",
+         "Arn"
+        ]
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "PolicyName": "initReviewsDDBDataCustomResourcePolicyD4BADE7A",
+    "Roles": [
+     {
+      "Ref": "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2"
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "DistributedSystemsCA1Stack/initReviewsDDBData/CustomResourcePolicy/Resource"
+   }
+  },
+  "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2": {
+   "Type": "AWS::IAM::Role",
+   "Properties": {
+    "AssumeRolePolicyDocument": {
+     "Statement": [
+      {
+       "Action": "sts:AssumeRole",
+       "Effect": "Allow",
+       "Principal": {
+        "Service": "lambda.amazonaws.com"
+       }
+      }
+     ],
+     "Version": "2012-10-17"
+    },
+    "ManagedPolicyArns": [
+     {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+       ]
+      ]
+     }
+    ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "DistributedSystemsCA1Stack/AWS679f53fac002430cb0da5b7982bd2287/ServiceRole/Resource"
+   }
+  },
+  "AWS679f53fac002430cb0da5b7982bd22872D164C4C": {
+   "Type": "AWS::Lambda::Function",
+   "Properties": {
+    "Code": {
+     "S3Bucket": {
+      "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
+     },
+     "S3Key": "099a3112386fa620b3069790dcf92c8e64bb5341760a8b0a76bfa843f8ad41df.zip"
+    },
+    "Handler": "index.handler",
+    "Role": {
+     "Fn::GetAtt": [
+      "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2",
+      "Arn"
+     ]
+    },
+    "Runtime": "nodejs18.x",
+    "Timeout": 120
+   },
+   "DependsOn": [
+    "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "DistributedSystemsCA1Stack/AWS679f53fac002430cb0da5b7982bd2287/Resource",
+    "aws:asset:path": "asset.099a3112386fa620b3069790dcf92c8e64bb5341760a8b0a76bfa843f8ad41df",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
+  },
+  "ReviewsApiACD7B840": {
+   "Type": "AWS::ApiGateway::RestApi",
+   "Properties": {
+    "Description": "Reviews API",
+    "Name": "ReviewsApi"
+   },
+   "Metadata": {
+    "aws:cdk:path": "DistributedSystemsCA1Stack/ReviewsApi/Resource"
+   }
+  },
+  "ReviewsApiDeployment4C440010813deeebc5babf2e0a83ca8388b062a3": {
+   "Type": "AWS::ApiGateway::Deployment",
+   "Properties": {
+    "Description": "Reviews API",
+    "RestApiId": {
+     "Ref": "ReviewsApiACD7B840"
+    }
+   },
+   "DependsOn": [
+    "ReviewsApiOPTIONS22F4A573",
+    "ReviewsApireviewsGET12337435",
+    "ReviewsApireviewsOPTIONSE2250C74",
+    "ReviewsApireviewsA4FC1247"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "DistributedSystemsCA1Stack/ReviewsApi/Deployment/Resource"
+   }
+  },
+  "ReviewsApiDeploymentStagedev1C7AA00F": {
+   "Type": "AWS::ApiGateway::Stage",
+   "Properties": {
+    "DeploymentId": {
+     "Ref": "ReviewsApiDeployment4C440010813deeebc5babf2e0a83ca8388b062a3"
+    },
+    "RestApiId": {
+     "Ref": "ReviewsApiACD7B840"
+    },
+    "StageName": "dev"
+   },
+   "Metadata": {
+    "aws:cdk:path": "DistributedSystemsCA1Stack/ReviewsApi/DeploymentStage.dev/Resource"
+   }
+  },
+  "ReviewsApiOPTIONS22F4A573": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "ApiKeyRequired": false,
+    "AuthorizationType": "NONE",
+    "HttpMethod": "OPTIONS",
+    "Integration": {
+     "IntegrationResponses": [
+      {
+       "ResponseParameters": {
+        "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date'",
+        "method.response.header.Access-Control-Allow-Origin": "'*'",
+        "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,POST,PUT,DELETE'",
+        "method.response.header.Access-Control-Allow-Credentials": "'true'"
+       },
+       "StatusCode": "204"
+      }
+     ],
+     "RequestTemplates": {
+      "application/json": "{ statusCode: 200 }"
+     },
+     "Type": "MOCK"
+    },
+    "MethodResponses": [
+     {
+      "ResponseParameters": {
+       "method.response.header.Access-Control-Allow-Headers": true,
+       "method.response.header.Access-Control-Allow-Origin": true,
+       "method.response.header.Access-Control-Allow-Methods": true,
+       "method.response.header.Access-Control-Allow-Credentials": true
+      },
+      "StatusCode": "204"
+     }
+    ],
+    "ResourceId": {
+     "Fn::GetAtt": [
+      "ReviewsApiACD7B840",
+      "RootResourceId"
+     ]
+    },
+    "RestApiId": {
+     "Ref": "ReviewsApiACD7B840"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "DistributedSystemsCA1Stack/ReviewsApi/Default/OPTIONS/Resource"
+   }
+  },
+  "ReviewsApireviewsA4FC1247": {
+   "Type": "AWS::ApiGateway::Resource",
+   "Properties": {
+    "ParentId": {
+     "Fn::GetAtt": [
+      "ReviewsApiACD7B840",
+      "RootResourceId"
+     ]
+    },
+    "PathPart": "reviews",
+    "RestApiId": {
+     "Ref": "ReviewsApiACD7B840"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "DistributedSystemsCA1Stack/ReviewsApi/Default/reviews/Resource"
+   }
+  },
+  "ReviewsApireviewsOPTIONSE2250C74": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "ApiKeyRequired": false,
+    "AuthorizationType": "NONE",
+    "HttpMethod": "OPTIONS",
+    "Integration": {
+     "IntegrationResponses": [
+      {
+       "ResponseParameters": {
+        "method.response.header.Access-Control-Allow-Headers": "'Content-Type,X-Amz-Date'",
+        "method.response.header.Access-Control-Allow-Origin": "'*'",
+        "method.response.header.Access-Control-Allow-Methods": "'OPTIONS,GET,POST,PUT,DELETE'",
+        "method.response.header.Access-Control-Allow-Credentials": "'true'"
+       },
+       "StatusCode": "204"
+      }
+     ],
+     "RequestTemplates": {
+      "application/json": "{ statusCode: 200 }"
+     },
+     "Type": "MOCK"
+    },
+    "MethodResponses": [
+     {
+      "ResponseParameters": {
+       "method.response.header.Access-Control-Allow-Headers": true,
+       "method.response.header.Access-Control-Allow-Origin": true,
+       "method.response.header.Access-Control-Allow-Methods": true,
+       "method.response.header.Access-Control-Allow-Credentials": true
+      },
+      "StatusCode": "204"
+     }
+    ],
+    "ResourceId": {
+     "Ref": "ReviewsApireviewsA4FC1247"
+    },
+    "RestApiId": {
+     "Ref": "ReviewsApiACD7B840"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "DistributedSystemsCA1Stack/ReviewsApi/Default/reviews/OPTIONS/Resource"
+   }
+  },
+  "ReviewsApireviewsGETApiPermissionDistributedSystemsCA1StackReviewsApiD1B62E68GETreviews8F571F9C": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "GetAllReviewsFnD0E79FC2",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:",
+       {
+        "Ref": "AWS::Region"
+       },
+       ":",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "ReviewsApiACD7B840"
+       },
+       "/",
+       {
+        "Ref": "ReviewsApiDeploymentStagedev1C7AA00F"
+       },
+       "/GET/reviews"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "DistributedSystemsCA1Stack/ReviewsApi/Default/reviews/GET/ApiPermission.DistributedSystemsCA1StackReviewsApiD1B62E68.GET..reviews"
+   }
+  },
+  "ReviewsApireviewsGETApiPermissionTestDistributedSystemsCA1StackReviewsApiD1B62E68GETreviewsFF54A83C": {
+   "Type": "AWS::Lambda::Permission",
+   "Properties": {
+    "Action": "lambda:InvokeFunction",
+    "FunctionName": {
+     "Fn::GetAtt": [
+      "GetAllReviewsFnD0E79FC2",
+      "Arn"
+     ]
+    },
+    "Principal": "apigateway.amazonaws.com",
+    "SourceArn": {
+     "Fn::Join": [
+      "",
+      [
+       "arn:",
+       {
+        "Ref": "AWS::Partition"
+       },
+       ":execute-api:",
+       {
+        "Ref": "AWS::Region"
+       },
+       ":",
+       {
+        "Ref": "AWS::AccountId"
+       },
+       ":",
+       {
+        "Ref": "ReviewsApiACD7B840"
+       },
+       "/test-invoke-stage/GET/reviews"
+      ]
+     ]
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "DistributedSystemsCA1Stack/ReviewsApi/Default/reviews/GET/ApiPermission.Test.DistributedSystemsCA1StackReviewsApiD1B62E68.GET..reviews"
+   }
+  },
+  "ReviewsApireviewsGET12337435": {
+   "Type": "AWS::ApiGateway::Method",
+   "Properties": {
+    "AuthorizationType": "NONE",
+    "HttpMethod": "GET",
+    "Integration": {
+     "IntegrationHttpMethod": "POST",
+     "Type": "AWS_PROXY",
+     "Uri": {
+      "Fn::Join": [
+       "",
+       [
+        "arn:",
+        {
+         "Ref": "AWS::Partition"
+        },
+        ":apigateway:",
+        {
+         "Ref": "AWS::Region"
+        },
+        ":lambda:path/2015-03-31/functions/",
+        {
+         "Fn::GetAtt": [
+          "GetAllReviewsFnD0E79FC2",
+          "Arn"
+         ]
+        },
+        "/invocations"
+       ]
+      ]
+     }
+    },
+    "ResourceId": {
+     "Ref": "ReviewsApireviewsA4FC1247"
+    },
+    "RestApiId": {
+     "Ref": "ReviewsApiACD7B840"
+    }
+   },
+   "Metadata": {
+    "aws:cdk:path": "DistributedSystemsCA1Stack/ReviewsApi/Default/reviews/GET/Resource"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/11Qy07DMBD8lt4dQ+FArm0RNx5quUeuvaRO/Yiya6Ioyr9jO6FBnHZm1jua8QMvS36/ET0WUl0Lo898PJGQVxalalSDE9arKH6KswF2+HIZTMwIe1aicl5Bg/wtj5fgJGnvmBaWj0c/H+T54Y2WQ6Izmhg+VgIRCPkujcj5Psgr0F4gLPZ8jAc315N2tQHyq3IDyRc6qxEjm5hodS0IejHEGIC0a3VOssBnaI0fLDhK6h8Wm9c58wziex86CTnRK9DFq7Rc0O92cc54mlY510pGMTaTAcnbqluWsXSPh6ytNv/o6prwe6A25LwH75Sm3DP9Pm/w7ntb8u0T324a1LrogiNtgR/n+QP5KMW34wEAAA=="
+   },
+   "Metadata": {
+    "aws:cdk:path": "DistributedSystemsCA1Stack/CDKMetadata/Default"
+   },
+   "Condition": "CDKMetadataAvailable"
+  }
+ },
+ "Outputs": {
+  "ReviewsApiEndpoint9E21FC0F": {
+   "Value": {
+    "Fn::Join": [
+     "",
+     [
+      "https://",
+      {
+       "Ref": "ReviewsApiACD7B840"
+      },
+      ".execute-api.",
+      {
+       "Ref": "AWS::Region"
+      },
+      ".",
+      {
+       "Ref": "AWS::URLSuffix"
+      },
+      "/",
+      {
+       "Ref": "ReviewsApiDeploymentStagedev1C7AA00F"
+      },
+      "/"
+     ]
+    ]
+   }
+  }
+ },
+ "Conditions": {
+  "CDKMetadataAvailable": {
+   "Fn::Or": [
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "af-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-northwest-1"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "sa-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-2"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-2"
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "Parameters": {
+  "BootstrapVersion": {
+   "Type": "AWS::SSM::Parameter::Value<String>",
+   "Default": "/cdk-bootstrap/hnb659fds/version",
+   "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]"
+  }
+ },
+ "Rules": {
+  "CheckBootstrapVersion": {
+   "Assertions": [
+    {
+     "Assert": {
+      "Fn::Not": [
+       {
+        "Fn::Contains": [
+         [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+         ],
+         {
+          "Ref": "BootstrapVersion"
+         }
+        ]
+       }
+      ]
+     },
+     "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI."
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,186 @@
+{
+  "version": "32.0.0",
+  "artifacts": {
+    "DistributedSystemsCA1Stack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "DistributedSystemsCA1Stack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "DistributedSystemsCA1Stack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "DistributedSystemsCA1Stack.template.json",
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/4c9cc495c54f6017d47daab78ced30a2a4c0e39c6960c22dd10c785bac86867d.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "DistributedSystemsCA1Stack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "DistributedSystemsCA1Stack.assets"
+      ],
+      "metadata": {
+        "/DistributedSystemsCA1Stack/ReviewsTable": [
+          {
+            "type": "aws:cdk:hasPhysicalName",
+            "data": {
+              "Ref": "ReviewsTable1E51AE49"
+            }
+          }
+        ],
+        "/DistributedSystemsCA1Stack/ReviewsTable/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReviewsTable1E51AE49"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/GetAllReviewsFn/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAllReviewsFnServiceRoleD7332F49"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/GetAllReviewsFn/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAllReviewsFnServiceRoleDefaultPolicyBFA33483"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/GetAllReviewsFn/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "GetAllReviewsFnD0E79FC2"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/initReviewsDDBData/Resource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "initReviewsDDBData370629A9"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/initReviewsDDBData/CustomResourcePolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "initReviewsDDBDataCustomResourcePolicyD4BADE7A"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/AWS679f53fac002430cb0da5b7982bd2287/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/AWS679f53fac002430cb0da5b7982bd2287/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AWS679f53fac002430cb0da5b7982bd22872D164C4C"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/ReviewsApi/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReviewsApiACD7B840"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/ReviewsApi/Deployment/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReviewsApiDeployment4C440010813deeebc5babf2e0a83ca8388b062a3"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/ReviewsApi/DeploymentStage.dev/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReviewsApiDeploymentStagedev1C7AA00F"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/ReviewsApi/Endpoint": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReviewsApiEndpoint9E21FC0F"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/ReviewsApi/Default/OPTIONS/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReviewsApiOPTIONS22F4A573"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/ReviewsApi/Default/reviews/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReviewsApireviewsA4FC1247"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/ReviewsApi/Default/reviews/OPTIONS/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReviewsApireviewsOPTIONSE2250C74"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/ReviewsApi/Default/reviews/GET/ApiPermission.DistributedSystemsCA1StackReviewsApiD1B62E68.GET..reviews": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReviewsApireviewsGETApiPermissionDistributedSystemsCA1StackReviewsApiD1B62E68GETreviews8F571F9C"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/ReviewsApi/Default/reviews/GET/ApiPermission.Test.DistributedSystemsCA1StackReviewsApiD1B62E68.GET..reviews": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReviewsApireviewsGETApiPermissionTestDistributedSystemsCA1StackReviewsApiD1B62E68GETreviewsFF54A83C"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/ReviewsApi/Default/reviews/GET/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReviewsApireviewsGET12337435"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "DistributedSystemsCA1Stack"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}
