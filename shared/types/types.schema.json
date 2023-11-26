@@ -5,10 +5,8 @@
             "additionalProperties": false,
             "properties": {
                 "movieId": {
-                    "items": {
-                        "type": "number"
-                    }
-                },
+                    "type": "number"
+                    },
                 "reviewerName": {
                     "type": "string"
                 },

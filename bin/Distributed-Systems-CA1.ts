@@ -4,6 +4,7 @@ import {DistributedSystemsCA1Stack} from '../lib/Distributed-Systems-CA1-stack';
 
 const app = new App();
 new DistributedSystemsCA1Stack(app, 'DistributedSystemsCA1Stack', {
-  
- 
+
+    env: { region: "eu-west-1" } 
+
 });
