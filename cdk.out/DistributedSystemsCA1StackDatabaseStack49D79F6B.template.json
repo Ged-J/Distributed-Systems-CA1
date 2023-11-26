@@ -70,6 +70,30 @@
     "aws:cdk:path": "DistributedSystemsCA1Stack/DatabaseStack/reviewsTable/Resource"
    }
   },
+  "Users0A0EEA89": {
+   "Type": "AWS::DynamoDB::Table",
+   "Properties": {
+    "AttributeDefinitions": [
+     {
+      "AttributeName": "userId",
+      "AttributeType": "S"
+     }
+    ],
+    "BillingMode": "PAY_PER_REQUEST",
+    "KeySchema": [
+     {
+      "AttributeName": "userId",
+      "KeyType": "HASH"
+     }
+    ],
+    "TableName": "Users"
+   },
+   "UpdateReplacePolicy": "Delete",
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "DistributedSystemsCA1Stack/DatabaseStack/Users/Resource"
+   }
+  },
   "SeedDataEF0DEE30": {
    "Type": "Custom::AWS",
    "Properties": {
@@ -87,7 +111,7 @@
        {
         "Ref": "reviewsTable5BF175E8"
        },
-       "\":[{\"PutRequest\":{\"Item\":{\"movieId\":{\"N\":\"299054\"},\"reviewerName\":{\"S\":\"James781\"},\"rating\":{\"N\":\"6\"},\"content\":{\"S\":\"Although the film has its share of high points, there are more misses than hits, resulting in a 2 ½ hour experience that provokes frustration at a missed opportunity.\"},\"reviewDate\":{\"S\":\"2023-10-08\"}}}},{\"PutRequest\":{\"Item\":{\"movieId\":{\"N\":\"299054\"},\"reviewerName\":{\"S\":\"ned3\"},\"rating\":{\"N\":\"5\"},\"content\":{\"S\":\"Better than their last effort.\"},\"reviewDate\":{\"S\":\"2022-09-03\"}}}},{\"PutRequest\":{\"Item\":{\"movieId\":{\"N\":\"385687\"},\"reviewerName\":{\"S\":\"Proma6\"},\"rating\":{\"N\":\"8\"},\"content\":{\"S\":\"Most importantly, Scott Pilgrim Takes Off is true to its predecessors with an inexhaustibly fun spirit... The buoyant, punk rock, experimental soul of the story is thriving.\"},\"reviewDate\":{\"S\":\"2023-12-12\"}}}},{\"PutRequest\":{\"Item\":{\"movieId\":{\"N\":\"926393\"},\"reviewerName\":{\"S\":\"Ged76\"},\"rating\":{\"N\":\"6\"},\"content\":{\"S\":\"Anyone remember the little tune that went with the Edward Woodward television series? Well you won't hear it here in this rather procedural vehicle for Denzel Washington. His usually meticulous planning is compromised by a young lad with a rifle. This leaves \\\"McCall\\\" needing the care of a doctor \\\"Enzo\\\" (Remo Girone) in a small Sicilian town that is about to become the centre of the venal ambitions of \\\"Vincent\\\" (Andrea Scarduzio) and his henchman younger brother \\\"Marco\\\" (Andrea Dodero) who uses his team of thugs to extort from the local businesses. It's only a matter of time before heads clash and, well - you can guess the rest of this actually rather brutally predictable drama. Dakota Fanning appears now and again in a rather unnecessary sub-plot involving the CIA and some Syrian narcotics smugglers that is really undercooked - but for the most part this is really just Denzel being, well, Denzel on his quest to save his new-found friends from the grip of the unscrupulous Camorra. It's overlong for what it is, and I found Washington's performance to be rather sluggish throughout before a denouement that came across as rather simplistically rushed. It's fine, but forgettable.\"},\"reviewDate\":{\"S\":\"2023-07-09\"}}}},{\"PutRequest\":{\"Item\":{\"movieId\":{\"N\":\"872585\"},\"reviewerName\":{\"S\":\"WendyIronside\"},\"rating\":{\"N\":\"7\"},\"content\":{\"S\":\"**Parents should approach with caution, or at the very least, with extremely strong coffee.\"},\"reviewDate\":{\"S\":\"2023-01-04\"}}}}]}},\"physicalResourceId\":{\"id\":\"1701023160995\"}}"
+       "\":[{\"PutRequest\":{\"Item\":{\"movieId\":{\"N\":\"299054\"},\"reviewerName\":{\"S\":\"James781\"},\"rating\":{\"N\":\"6\"},\"content\":{\"S\":\"Although the film has its share of high points, there are more misses than hits, resulting in a 2 ½ hour experience that provokes frustration at a missed opportunity.\"},\"reviewDate\":{\"S\":\"2023-10-08\"}}}},{\"PutRequest\":{\"Item\":{\"movieId\":{\"N\":\"299054\"},\"reviewerName\":{\"S\":\"ned3\"},\"rating\":{\"N\":\"5\"},\"content\":{\"S\":\"Better than their last effort.\"},\"reviewDate\":{\"S\":\"2022-09-03\"}}}},{\"PutRequest\":{\"Item\":{\"movieId\":{\"N\":\"385687\"},\"reviewerName\":{\"S\":\"Proma6\"},\"rating\":{\"N\":\"8\"},\"content\":{\"S\":\"Most importantly, Scott Pilgrim Takes Off is true to its predecessors with an inexhaustibly fun spirit... The buoyant, punk rock, experimental soul of the story is thriving.\"},\"reviewDate\":{\"S\":\"2023-12-12\"}}}},{\"PutRequest\":{\"Item\":{\"movieId\":{\"N\":\"926393\"},\"reviewerName\":{\"S\":\"Ged76\"},\"rating\":{\"N\":\"6\"},\"content\":{\"S\":\"Anyone remember the little tune that went with the Edward Woodward television series? Well you won't hear it here in this rather procedural vehicle for Denzel Washington. His usually meticulous planning is compromised by a young lad with a rifle. This leaves \\\"McCall\\\" needing the care of a doctor \\\"Enzo\\\" (Remo Girone) in a small Sicilian town that is about to become the centre of the venal ambitions of \\\"Vincent\\\" (Andrea Scarduzio) and his henchman younger brother \\\"Marco\\\" (Andrea Dodero) who uses his team of thugs to extort from the local businesses. It's only a matter of time before heads clash and, well - you can guess the rest of this actually rather brutally predictable drama. Dakota Fanning appears now and again in a rather unnecessary sub-plot involving the CIA and some Syrian narcotics smugglers that is really undercooked - but for the most part this is really just Denzel being, well, Denzel on his quest to save his new-found friends from the grip of the unscrupulous Camorra. It's overlong for what it is, and I found Washington's performance to be rather sluggish throughout before a denouement that came across as rather simplistically rushed. It's fine, but forgettable.\"},\"reviewDate\":{\"S\":\"2023-07-09\"}}}},{\"PutRequest\":{\"Item\":{\"movieId\":{\"N\":\"872585\"},\"reviewerName\":{\"S\":\"WendyIronside\"},\"rating\":{\"N\":\"7\"},\"content\":{\"S\":\"**Parents should approach with caution, or at the very least, with extremely strong coffee.\"},\"reviewDate\":{\"S\":\"2023-01-04\"}}}}]}},\"physicalResourceId\":{\"id\":\"1701024834928\"}}"
       ]
      ]
     },

@@ -36,6 +36,13 @@ export class DynamoDBStack extends cdk.Stack {
         sortKey: { name: 'reviewDate', type: dynamodb.AttributeType.STRING },
         });
         
+        // DynamoDB table for users
+        this.usersTable = new dynamodb.Table(this, 'Users', {
+            billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
+            partitionKey: { name: 'userId', type: dynamodb.AttributeType.STRING },
+            tableName: 'Users',
+            removalPolicy: cdk.RemovalPolicy.DESTROY,
+          });
     
         // Seed data
         new custom.AwsCustomResource(this, 'SeedData', {

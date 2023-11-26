@@ -27,7 +27,7 @@ export class DistributedSystemsCA1Stack extends cdk.Stack {
     lambdaRole.addToPolicy(new iam.PolicyStatement({
       effect: iam.Effect.ALLOW,
       actions: ['translate:TranslateText'],
-      resources: ['*'],  // Adjust the resource as necessary
+      resources: ['*'],  
     }));
 
       // Get all reviews lambda

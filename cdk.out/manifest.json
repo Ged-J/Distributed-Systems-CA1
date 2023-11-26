@@ -17,7 +17,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/c009c54890dc6c38e009bbc9b556f187e9a0c64f2839fcee9352d5b3e77d9743.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/cde7d2e4fb295f8db9b7b9485f289e8421d8e5f0be19652e9755799c7f30ea6b.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -45,6 +45,20 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "reviewsTable5BF175E8"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/DatabaseStack/Users": [
+          {
+            "type": "aws:cdk:hasPhysicalName",
+            "data": {
+              "Ref": "Users0A0EEA89"
+            }
+          }
+        ],
+        "/DistributedSystemsCA1Stack/DatabaseStack/Users/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "Users0A0EEA89"
           }
         ],
         "/DistributedSystemsCA1Stack/DatabaseStack/SeedData/Resource/Default": [
@@ -114,7 +128,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-eu-west-1",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-eu-west-1",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-eu-west-1/b6b3decf3aea1d86066bfe289ae10fdcdb8b7d4304e8a5d10d6149b99726484d.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-eu-west-1/fab5f1550ab0c33dc38ea28516790678a4eae711345579ce44b638830a56e79e.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -134,6 +148,12 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "LambdaRole3A44B857"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/LambdaRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LambdaRoleDefaultPolicy75625A82"
           }
         ],
         "/DistributedSystemsCA1Stack/GetAllReviewsFn/ServiceRole/Resource": [
@@ -170,18 +190,6 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "AddMovieFnA0261A58"
-          }
-        ],
-        "/DistributedSystemsCA1Stack/GetReviewsByMovieIdAndParameterFunction/ServiceRole/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "GetReviewsByMovieIdAndParameterFunctionServiceRoleE732834F"
-          }
-        ],
-        "/DistributedSystemsCA1Stack/GetReviewsByMovieIdAndParameterFunction/ServiceRole/DefaultPolicy/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "GetReviewsByMovieIdAndParameterFunctionServiceRoleDefaultPolicy5467DCF6"
           }
         ],
         "/DistributedSystemsCA1Stack/GetReviewsByMovieIdAndParameterFunction/Resource": [
