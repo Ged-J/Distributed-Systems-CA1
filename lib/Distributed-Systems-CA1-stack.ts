@@ -8,28 +8,31 @@ import { generateBatch } from '../shared/util';
 import * as custom from "aws-cdk-lib/custom-resources"
 import * as lambdanode from "aws-cdk-lib/aws-lambda-nodejs";
 import { Construct } from "constructs";
+import { DynamoDBStack } from './DistributedSystemsCA1DatabaseStack';
+import * as iam from 'aws-cdk-lib/aws-iam';
 
 export class DistributedSystemsCA1Stack extends cdk.Stack {
+
     constructor(scope: Construct, id: string, props?: cdk.StackProps) {
-        super(scope, id, props);
-    
-        const reviewsTable = new dynamodb.Table(this, 'ReviewsTable', {
-          billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
-          partitionKey: { name: 'movieId', type: dynamodb.AttributeType.NUMBER },
-          sortKey: { name: 'reviewerName', type: dynamodb.AttributeType.STRING },
-          removalPolicy: cdk.RemovalPolicy.DESTROY,
-          tableName: 'ReviewsTable',
-        });
-    
-        // Get all reviews lambda
-        const getAllReviewsFn = new lambdanode.NodejsFunction(this, "GetAllReviewsFn", {
+      super(scope, id, props);
+
+      const databaseStack = new DynamoDBStack(this, "DatabaseStack");
+
+      // Define the IAM role
+      const lambdaRole = new iam.Role(this, 'LambdaRole', {
+        assumedBy: new iam.ServicePrincipal('lambda.amazonaws.com'),
+      });
+
+      // Get all reviews lambda
+      const getAllReviewsFn = new lambdanode.NodejsFunction(this, "GetAllReviewsFn", {
+        
           architecture: lambda.Architecture.ARM_64,
           runtime: lambda.Runtime.NODEJS_16_X,
           entry: `${__dirname}/../lambdas/getAllReviews.ts`,
           timeout: cdk.Duration.seconds(10),
           memorySize: 128,
           environment: {
-              TABLE_NAME: reviewsTable.tableName,
+              TABLE_NAME: databaseStack.reviewsTable.tableName,
               REGION: 'eu-west-1'
           }
         });
@@ -42,7 +45,7 @@ export class DistributedSystemsCA1Stack extends cdk.Stack {
           timeout: cdk.Duration.seconds(10),
           memorySize: 128,
           environment: {
-            TABLE_NAME: reviewsTable.tableName,
+            TABLE_NAME: databaseStack.reviewsTable.tableName,
             REGION: "eu-west-1",
           }
         });
@@ -54,34 +57,30 @@ export class DistributedSystemsCA1Stack extends cdk.Stack {
             timeout: cdk.Duration.seconds(10),
             memorySize: 128,
             environment: {
-              TABLE_NAME: reviewsTable.tableName,
+              TABLE_NAME: databaseStack.reviewsTable.tableName,
               REGION: 'eu-west-1',
             },
           }
           );
-    
-        new custom.AwsCustomResource(this, "initReviewsDDBData", {
-          onCreate: {
-            service: "DynamoDB",
-            action: "batchWriteItem",
-            parameters: {
-              RequestItems: {
-                [reviewsTable.tableName]: generateBatch(review),
+
+          const getReviewsByReviewerFn = new lambdanode.NodejsFunction(this,"GetReviewsByReviewerFunction",{
+              architecture: lambda.Architecture.ARM_64,
+              runtime: lambda.Runtime.NODEJS_16_X,
+              entry: `${__dirname}/../lambdas/getReviewsByReviewerName.ts`,
+              timeout: cdk.Duration.seconds(10),
+              memorySize: 128,
+              environment: {
+                TABLE_NAME: databaseStack.reviewsTable.tableName,
+                REGION: 'eu-west-1',
               },
-            },
-            physicalResourceId: custom.PhysicalResourceId.of("initReviewsDDBData"),
-          },
-          policy: custom.AwsCustomResourcePolicy.fromSdkCalls({
-            resources: [reviewsTable.tableArn],
-        }),
-      });
+            }
+            );
     
       // Permissions
-      reviewsTable.grantReadData(getAllReviewsFn);
-
-      reviewsTable.grantReadWriteData(newReviewFn);
-
-      reviewsTable.grantReadData(getReviewsByMovieIdAndParameterFn);
+      databaseStack.reviewsTable.grantReadData(getAllReviewsFn);
+      databaseStack.reviewsTable.grantReadWriteData(newReviewFn);
+      databaseStack.reviewsTable.grantReadData(getReviewsByMovieIdAndParameterFn);
+      databaseStack.reviewsTable.grantReadData(getReviewsByReviewerFn);
     
       const api = new apig.RestApi(this, 'ReviewsApi', {
         description: "Reviews API",
@@ -98,26 +97,23 @@ export class DistributedSystemsCA1Stack extends cdk.Stack {
       });
 
       const moviesEndpoint = api.root.addResource('movies');
-
-      //specific movie
-      const movieIdEndpoint = moviesEndpoint.addResource("{movieId}");
-
-      const movieReviewsEndpoint = movieIdEndpoint.addResource("reviews");
-
-      const movieNewReviewEndpoint = moviesEndpoint.addResource('review');
-
+      
+      const movieAddReviewEndpoint = moviesEndpoint.addResource('review');
+      movieAddReviewEndpoint.addMethod('POST', new apig.LambdaIntegration(newReviewFn));
+      
+       ///{movieId}/reviews
+       const movieIdEndpoint = moviesEndpoint.addResource('{movieId}');
+       const movieReviewsEndpoint = movieIdEndpoint.addResource('reviews');
+       movieReviewsEndpoint.addMethod('GET', new apig.LambdaIntegration(getAllReviewsFn));
+      
+      //reviewerName or year
       const reviewParameterEndpoint = movieReviewsEndpoint.addResource('{parameter}');
-
-      // GET /reviews
-      movieIdEndpoint.addMethod('GET', new apig.LambdaIntegration(getAllReviewsFn, { proxy: true }));
-
-      // GET /reviews
-      movieReviewsEndpoint.addMethod('GET', new apig.LambdaIntegration(getAllReviewsFn, { proxy: true }));
-
       reviewParameterEndpoint.addMethod('GET', new apig.LambdaIntegration(getReviewsByMovieIdAndParameterFn));
 
-      // POST /reviews
-      movieIdEndpoint.addMethod("POST",new apig.LambdaIntegration(newReviewFn, { proxy: true }));
-
-    }
-    }
+      
+      // /reviews/{reviewId}
+      const reviewsEndpoint = moviesEndpoint.addResource('reviews');
+      const reviewNameEndpoint = reviewsEndpoint.addResource('{reviewerName}');
+      reviewNameEndpoint.addMethod('GET', new apig.LambdaIntegration(getReviewsByReviewerFn));
+  }
+}

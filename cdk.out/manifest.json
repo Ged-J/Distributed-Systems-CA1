@@ -1,6 +1,103 @@
 {
   "version": "32.0.0",
   "artifacts": {
+    "DistributedSystemsCA1StackDatabaseStack49D79F6B.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "DistributedSystemsCA1StackDatabaseStack49D79F6B.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "DistributedSystemsCA1StackDatabaseStack49D79F6B": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "DistributedSystemsCA1StackDatabaseStack49D79F6B.template.json",
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/90002b19ecbe7f9bec823e1807c9fe5c8492444c0ad62e8abb1612253517d4ac.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "DistributedSystemsCA1StackDatabaseStack49D79F6B.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "DistributedSystemsCA1StackDatabaseStack49D79F6B.assets"
+      ],
+      "metadata": {
+        "/DistributedSystemsCA1Stack/DatabaseStack/reviewsTable": [
+          {
+            "type": "aws:cdk:hasPhysicalName",
+            "data": {
+              "Ref": "reviewsTable5BF175E8"
+            }
+          }
+        ],
+        "/DistributedSystemsCA1Stack/DatabaseStack/reviewsTable/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "reviewsTable5BF175E8"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/DatabaseStack/SeedData/Resource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SeedDataEF0DEE30"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/DatabaseStack/SeedData/CustomResourcePolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "SeedDataCustomResourcePolicy6E07F439"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/DatabaseStack/AWS679f53fac002430cb0da5b7982bd2287/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/DatabaseStack/AWS679f53fac002430cb0da5b7982bd2287/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AWS679f53fac002430cb0da5b7982bd22872D164C4C"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/DatabaseStack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/DatabaseStack/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/DatabaseStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/DatabaseStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "DistributedSystemsCA1Stack/DatabaseStack"
+    },
     "DistributedSystemsCA1Stack.assets": {
       "type": "cdk:asset-manifest",
       "properties": {
@@ -17,7 +114,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-eu-west-1",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-eu-west-1",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-eu-west-1/82bfefcf3cf97221e412537b9889ab5f00cce6c1020cacbd5cea423e2f15996e.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-eu-west-1/03189a8ca3bb2b84cec5ec3364a8540e8825ebe652e425ab0064508eb531ad39.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -33,18 +130,10 @@
         "DistributedSystemsCA1Stack.assets"
       ],
       "metadata": {
-        "/DistributedSystemsCA1Stack/ReviewsTable": [
-          {
-            "type": "aws:cdk:hasPhysicalName",
-            "data": {
-              "Ref": "ReviewsTable1E51AE49"
-            }
-          }
-        ],
-        "/DistributedSystemsCA1Stack/ReviewsTable/Resource": [
+        "/DistributedSystemsCA1Stack/LambdaRole/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "ReviewsTable1E51AE49"
+            "data": "LambdaRole3A44B857"
           }
         ],
         "/DistributedSystemsCA1Stack/GetAllReviewsFn/ServiceRole/Resource": [
@@ -101,28 +190,22 @@
             "data": "GetReviewsByMovieIdAndParameterFunctionCEC6A863"
           }
         ],
-        "/DistributedSystemsCA1Stack/initReviewsDDBData/Resource/Default": [
+        "/DistributedSystemsCA1Stack/GetReviewsByReviewerFunction/ServiceRole/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "initReviewsDDBData370629A9"
+            "data": "GetReviewsByReviewerFunctionServiceRole3E54554D"
           }
         ],
-        "/DistributedSystemsCA1Stack/initReviewsDDBData/CustomResourcePolicy/Resource": [
+        "/DistributedSystemsCA1Stack/GetReviewsByReviewerFunction/ServiceRole/DefaultPolicy/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "initReviewsDDBDataCustomResourcePolicyD4BADE7A"
+            "data": "GetReviewsByReviewerFunctionServiceRoleDefaultPolicy1A157AD9"
           }
         ],
-        "/DistributedSystemsCA1Stack/AWS679f53fac002430cb0da5b7982bd2287/ServiceRole/Resource": [
+        "/DistributedSystemsCA1Stack/GetReviewsByReviewerFunction/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "AWS679f53fac002430cb0da5b7982bd2287ServiceRoleC1EA0FF2"
-          }
-        ],
-        "/DistributedSystemsCA1Stack/AWS679f53fac002430cb0da5b7982bd2287/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "AWS679f53fac002430cb0da5b7982bd22872D164C4C"
+            "data": "GetReviewsByReviewerFunctionE6D57431"
           }
         ],
         "/DistributedSystemsCA1Stack/ReviewsApi/Resource": [
@@ -134,7 +217,7 @@
         "/DistributedSystemsCA1Stack/ReviewsApi/Deployment/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "ReviewsApiDeployment4C4400104ea9883103a030e3525bd6e714c2c809"
+            "data": "ReviewsApiDeployment4C44001007f8e704b6514964b6a06f21176bb7c8"
           }
         ],
         "/DistributedSystemsCA1Stack/ReviewsApi/DeploymentStage.dev/Resource": [
@@ -167,6 +250,36 @@
             "data": "ReviewsApimoviesOPTIONS8BDA81B6"
           }
         ],
+        "/DistributedSystemsCA1Stack/ReviewsApi/Default/movies/review/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReviewsApimoviesreview2119A537"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/ReviewsApi/Default/movies/review/OPTIONS/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReviewsApimoviesreviewOPTIONSF4A939C6"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/ReviewsApi/Default/movies/review/POST/ApiPermission.DistributedSystemsCA1StackReviewsApiD1B62E68.POST..movies.review": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReviewsApimoviesreviewPOSTApiPermissionDistributedSystemsCA1StackReviewsApiD1B62E68POSTmoviesreviewD918BF8C"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/ReviewsApi/Default/movies/review/POST/ApiPermission.Test.DistributedSystemsCA1StackReviewsApiD1B62E68.POST..movies.review": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReviewsApimoviesreviewPOSTApiPermissionTestDistributedSystemsCA1StackReviewsApiD1B62E68POSTmoviesreview43026FB5"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/ReviewsApi/Default/movies/review/POST/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReviewsApimoviesreviewPOSTFEB47549"
+          }
+        ],
         "/DistributedSystemsCA1Stack/ReviewsApi/Default/movies/{movieId}/Resource": [
           {
             "type": "aws:cdk:logicalId",
@@ -189,6 +302,24 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "ReviewsApimoviesmovieIdreviewsOPTIONS3E38477D"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/ReviewsApi/Default/movies/{movieId}/reviews/GET/ApiPermission.DistributedSystemsCA1StackReviewsApiD1B62E68.GET..movies.{movieId}.reviews": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReviewsApimoviesmovieIdreviewsGETApiPermissionDistributedSystemsCA1StackReviewsApiD1B62E68GETmoviesmovieIdreviews0C0D58AA"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/ReviewsApi/Default/movies/{movieId}/reviews/GET/ApiPermission.Test.DistributedSystemsCA1StackReviewsApiD1B62E68.GET..movies.{movieId}.reviews": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReviewsApimoviesmovieIdreviewsGETApiPermissionTestDistributedSystemsCA1StackReviewsApiD1B62E68GETmoviesmovieIdreviewsA51BA5A1"
+          }
+        ],
+        "/DistributedSystemsCA1Stack/ReviewsApi/Default/movies/{movieId}/reviews/GET/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ReviewsApimoviesmovieIdreviewsGETE6E90282"
           }
         ],
         "/DistributedSystemsCA1Stack/ReviewsApi/Default/movies/{movieId}/reviews/{parameter}/Resource": [
@@ -221,70 +352,46 @@
             "data": "ReviewsApimoviesmovieIdreviewsparameterGET7B89FFB6"
           }
         ],
-        "/DistributedSystemsCA1Stack/ReviewsApi/Default/movies/{movieId}/reviews/GET/ApiPermission.DistributedSystemsCA1StackReviewsApiD1B62E68.GET..movies.{movieId}.reviews": [
+        "/DistributedSystemsCA1Stack/ReviewsApi/Default/movies/reviews/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "ReviewsApimoviesmovieIdreviewsGETApiPermissionDistributedSystemsCA1StackReviewsApiD1B62E68GETmoviesmovieIdreviews0C0D58AA"
+            "data": "ReviewsApimoviesreviews7041CC96"
           }
         ],
-        "/DistributedSystemsCA1Stack/ReviewsApi/Default/movies/{movieId}/reviews/GET/ApiPermission.Test.DistributedSystemsCA1StackReviewsApiD1B62E68.GET..movies.{movieId}.reviews": [
+        "/DistributedSystemsCA1Stack/ReviewsApi/Default/movies/reviews/OPTIONS/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "ReviewsApimoviesmovieIdreviewsGETApiPermissionTestDistributedSystemsCA1StackReviewsApiD1B62E68GETmoviesmovieIdreviewsA51BA5A1"
+            "data": "ReviewsApimoviesreviewsOPTIONS9EB635B0"
           }
         ],
-        "/DistributedSystemsCA1Stack/ReviewsApi/Default/movies/{movieId}/reviews/GET/Resource": [
+        "/DistributedSystemsCA1Stack/ReviewsApi/Default/movies/reviews/{reviewerName}/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "ReviewsApimoviesmovieIdreviewsGETE6E90282"
+            "data": "ReviewsApimoviesreviewsreviewerNameC4123615"
           }
         ],
-        "/DistributedSystemsCA1Stack/ReviewsApi/Default/movies/{movieId}/GET/ApiPermission.DistributedSystemsCA1StackReviewsApiD1B62E68.GET..movies.{movieId}": [
+        "/DistributedSystemsCA1Stack/ReviewsApi/Default/movies/reviews/{reviewerName}/OPTIONS/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "ReviewsApimoviesmovieIdGETApiPermissionDistributedSystemsCA1StackReviewsApiD1B62E68GETmoviesmovieId66E56E28"
+            "data": "ReviewsApimoviesreviewsreviewerNameOPTIONSF2105B08"
           }
         ],
-        "/DistributedSystemsCA1Stack/ReviewsApi/Default/movies/{movieId}/GET/ApiPermission.Test.DistributedSystemsCA1StackReviewsApiD1B62E68.GET..movies.{movieId}": [
+        "/DistributedSystemsCA1Stack/ReviewsApi/Default/movies/reviews/{reviewerName}/GET/ApiPermission.DistributedSystemsCA1StackReviewsApiD1B62E68.GET..movies.reviews.{reviewerName}": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "ReviewsApimoviesmovieIdGETApiPermissionTestDistributedSystemsCA1StackReviewsApiD1B62E68GETmoviesmovieIdD1796FA5"
+            "data": "ReviewsApimoviesreviewsreviewerNameGETApiPermissionDistributedSystemsCA1StackReviewsApiD1B62E68GETmoviesreviewsreviewerNameE17CCD6B"
           }
         ],
-        "/DistributedSystemsCA1Stack/ReviewsApi/Default/movies/{movieId}/GET/Resource": [
+        "/DistributedSystemsCA1Stack/ReviewsApi/Default/movies/reviews/{reviewerName}/GET/ApiPermission.Test.DistributedSystemsCA1StackReviewsApiD1B62E68.GET..movies.reviews.{reviewerName}": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "ReviewsApimoviesmovieIdGET48D401D8"
+            "data": "ReviewsApimoviesreviewsreviewerNameGETApiPermissionTestDistributedSystemsCA1StackReviewsApiD1B62E68GETmoviesreviewsreviewerName337896F2"
           }
         ],
-        "/DistributedSystemsCA1Stack/ReviewsApi/Default/movies/{movieId}/POST/ApiPermission.DistributedSystemsCA1StackReviewsApiD1B62E68.POST..movies.{movieId}": [
+        "/DistributedSystemsCA1Stack/ReviewsApi/Default/movies/reviews/{reviewerName}/GET/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "ReviewsApimoviesmovieIdPOSTApiPermissionDistributedSystemsCA1StackReviewsApiD1B62E68POSTmoviesmovieId1856A1F0"
-          }
-        ],
-        "/DistributedSystemsCA1Stack/ReviewsApi/Default/movies/{movieId}/POST/ApiPermission.Test.DistributedSystemsCA1StackReviewsApiD1B62E68.POST..movies.{movieId}": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "ReviewsApimoviesmovieIdPOSTApiPermissionTestDistributedSystemsCA1StackReviewsApiD1B62E68POSTmoviesmovieId0164D285"
-          }
-        ],
-        "/DistributedSystemsCA1Stack/ReviewsApi/Default/movies/{movieId}/POST/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "ReviewsApimoviesmovieIdPOSTD3BE446B"
-          }
-        ],
-        "/DistributedSystemsCA1Stack/ReviewsApi/Default/movies/review/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "ReviewsApimoviesreview2119A537"
-          }
-        ],
-        "/DistributedSystemsCA1Stack/ReviewsApi/Default/movies/review/OPTIONS/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "ReviewsApimoviesreviewOPTIONSF4A939C6"
+            "data": "ReviewsApimoviesreviewsreviewerNameGETFC425510"
           }
         ],
         "/DistributedSystemsCA1Stack/CDKMetadata/Default": [
