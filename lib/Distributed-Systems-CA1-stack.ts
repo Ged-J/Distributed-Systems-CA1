@@ -23,6 +23,13 @@ export class DistributedSystemsCA1Stack extends cdk.Stack {
         assumedBy: new iam.ServicePrincipal('lambda.amazonaws.com'),
       });
 
+      // Add AWS Translate permissions to the role
+    lambdaRole.addToPolicy(new iam.PolicyStatement({
+      effect: iam.Effect.ALLOW,
+      actions: ['translate:TranslateText'],
+      resources: ['*'],  // Adjust the resource as necessary
+    }));
+
       // Get all reviews lambda
       const getAllReviewsFn = new lambdanode.NodejsFunction(this, "GetAllReviewsFn", {
         
@@ -60,6 +67,7 @@ export class DistributedSystemsCA1Stack extends cdk.Stack {
               TABLE_NAME: databaseStack.reviewsTable.tableName,
               REGION: 'eu-west-1',
             },
+            role: lambdaRole,
           }
           );
 
@@ -75,12 +83,26 @@ export class DistributedSystemsCA1Stack extends cdk.Stack {
               },
             }
             );
+
+            const updateReviewFn = new lambdanode.NodejsFunction(this,"UpdateReviewFunction",{
+                architecture: lambda.Architecture.ARM_64,
+                runtime: lambda.Runtime.NODEJS_16_X,
+                entry: `${__dirname}/../lambdas/updateReview.ts`,
+                timeout: cdk.Duration.seconds(10),
+                memorySize: 128,
+                environment: {
+                  TABLE_NAME: databaseStack.reviewsTable.tableName,
+                  REGION: 'eu-west-1',
+                },
+              }
+              );
     
       // Permissions
       databaseStack.reviewsTable.grantReadData(getAllReviewsFn);
       databaseStack.reviewsTable.grantReadWriteData(newReviewFn);
       databaseStack.reviewsTable.grantReadData(getReviewsByMovieIdAndParameterFn);
       databaseStack.reviewsTable.grantReadData(getReviewsByReviewerFn);
+      databaseStack.reviewsTable.grantWriteData(updateReviewFn);
     
       const api = new apig.RestApi(this, 'ReviewsApi', {
         description: "Reviews API",
@@ -96,10 +118,8 @@ export class DistributedSystemsCA1Stack extends cdk.Stack {
         }
       });
 
+      // /movies
       const moviesEndpoint = api.root.addResource('movies');
-      
-      const movieAddReviewEndpoint = moviesEndpoint.addResource('review');
-      movieAddReviewEndpoint.addMethod('POST', new apig.LambdaIntegration(newReviewFn));
       
        ///{movieId}/reviews
        const movieIdEndpoint = moviesEndpoint.addResource('{movieId}');
@@ -115,5 +135,12 @@ export class DistributedSystemsCA1Stack extends cdk.Stack {
       const reviewsEndpoint = moviesEndpoint.addResource('reviews');
       const reviewNameEndpoint = reviewsEndpoint.addResource('{reviewerName}');
       reviewNameEndpoint.addMethod('GET', new apig.LambdaIntegration(getReviewsByReviewerFn));
+
+      // /movies/{movieId}/reviews
+      const movieAddReviewEndpoint = moviesEndpoint.addResource('review');
+      movieAddReviewEndpoint.addMethod('POST', new apig.LambdaIntegration(newReviewFn));
+
+      // /movies/{movieId}/reviews/{reviewerName}
+      reviewParameterEndpoint.addMethod('PUT', new apig.LambdaIntegration(updateReviewFn));
   }
 }
